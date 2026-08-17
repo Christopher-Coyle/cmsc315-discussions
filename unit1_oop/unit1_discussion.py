@@ -9,7 +9,6 @@ You are provided with starter code containing TODO sections. Your task is to com
 analyze the code to demonstrate understanding of inheritance, namespaces, and object copying.
 """
 
-
 from copy import copy, deepcopy
 
 
@@ -24,8 +23,18 @@ from copy import copy, deepcopy
 #
 # Replace the pass statement with your implementation.
 
-class ParentClass:
-    pass
+class SmartDevice:
+    device_category = "Smart Home Device"
+
+    def __init__(self, name, location):
+        self.name = name
+        self.location = location
+
+    def display_info(self):
+        return (
+            f"Device: {self.name}, Location: {self.location}, "
+            f"Category: {self.device_category}"
+        )
 
 
 # TODO 2:
@@ -40,8 +49,41 @@ class ParentClass:
 #
 # Replace the pass statement with your implementation.
 
-class ChildClass(ParentClass):
-    pass
+class SecurityCamera(SmartDevice):
+    manufacturer = "SecureHome Technologies"
+
+    def __init__(self, name, location, resolution, settings=None):
+        super().__init__(name, location)
+        self.resolution = resolution
+        self.recording = False
+        self.settings = (
+            settings
+            if settings is not None
+            else {"alerts": ["motion"], "night_vision": True}
+        )
+
+    def start_recording(self):
+        self.recording = True
+
+    def stop_recording(self):
+        self.recording = False
+
+    def display_info(self):
+        return (
+            f"Device: {self.name}, Location: {self.location}, "
+            f"Resolution: {self.resolution}, Recording: {self.recording}, "
+            f"Manufacturer: {self.manufacturer}"
+        )
+
+    # Student-created extension:
+    # This method provides a simple operational status summary.
+    def status_report(self):
+        alert_types = ", ".join(self.settings["alerts"])
+        return (
+            f"{self.name} status -> Recording: {self.recording}, "
+            f"Night vision: {self.settings['night_vision']}, "
+            f"Alerts: {alert_types}"
+        )
 
 
 # TODO 3:
@@ -57,7 +99,35 @@ class ChildClass(ParentClass):
 
 def demonstrate_namespaces():
     print("\n=== Namespace Demonstration ===")
-    print("TODO: Implement namespace demonstration")
+
+    front_camera = SecurityCamera("Front Camera", "Front Door", "4K")
+    garage_camera = SecurityCamera("Garage Camera", "Garage", "1080p")
+
+    print("Class variable through class:")
+    print(SecurityCamera.manufacturer)
+
+    print("\nSame class variable through an object:")
+    print(front_camera.manufacturer)
+
+    # Add an attribute only to front_camera's instance namespace.
+    front_camera.install_date = "2026-08-15"
+
+    print("\nFront camera instance namespace:")
+    print(front_camera.__dict__)
+
+    print("\nGarage camera instance namespace:")
+    print(garage_camera.__dict__)
+
+    print("\nSelected SecurityCamera class namespace entries:")
+    for key in (
+            "manufacturer",
+            "__init__",
+            "start_recording",
+            "stop_recording",
+            "display_info",
+            "status_report",
+    ):
+        print(f"{key}: {SecurityCamera.__dict__[key]}")
 
 
 # TODO 4:
@@ -73,7 +143,33 @@ def demonstrate_namespaces():
 
 def demonstrate_copying():
     print("\n=== Copy Demonstration ===")
-    print("TODO: Implement shallow copy and deep copy demonstration")
+
+    original = SecurityCamera(
+        "Backyard Camera",
+        "Backyard",
+        "4K",
+        {"alerts": ["motion", "person"], "night_vision": True},
+    )
+
+    shallow_camera = copy(original)
+    deep_camera = deepcopy(original)
+
+    # A shallow copy creates a new outer object, but nested mutable data
+    # remains shared. Therefore, changing the original nested alerts list
+    # is also visible through shallow_camera.
+    #
+    # A deep copy recursively duplicates nested mutable data. Therefore,
+    # deep_camera keeps its own independent copy of the alerts list.
+    original.settings["alerts"].append("vehicle")
+
+    print("Original settings:")
+    print(original.settings)
+
+    print("\nShallow-copy settings:")
+    print(shallow_camera.settings)
+
+    print("\nDeep-copy settings:")
+    print(deep_camera.settings)
 
 
 # TODO 5:
@@ -89,9 +185,19 @@ def demonstrate_copying():
 def main():
     print("=== Unit 1 OOP Assignment ===")
 
-    print("\nTODO: Create and test your parent object")
+    print("\nParent object:")
+    thermostat = SmartDevice("Hallway Thermostat", "Hallway")
+    print(thermostat.display_info())
 
-    print("\nTODO: Create and test your child object")
+    print("\nChild object:")
+    camera = SecurityCamera("Entry Camera", "Front Door", "4K")
+    print(camera.display_info())
+
+    camera.start_recording()
+    print(camera.display_info())
+
+    # Student-created extension demonstration.
+    print(camera.status_report())
 
     demonstrate_namespaces()
     demonstrate_copying()
