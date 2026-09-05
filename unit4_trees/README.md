@@ -1,32 +1,77 @@
-# Unit 4 Discussion: Binary Search Trees
+Unit 4 Discussion: Binary Search Trees
 
-## Overview
+Overview
 
-This assignment introduces Binary Search Trees (BSTs) and recursive tree operations.
+This assignment introduced Binary Search Trees (BSTs) and recursive tree operations.
 
-## Learning Objectives
+Learning Objectives
 
-- Build a BST
-- Insert values recursively
-- Search recursively
-- Perform in-order traversal
-- Understand BST organization
+Built a BST
 
-## Requirements
+Inserted values recursively
 
-1. Build a BST.
-2. Insert multiple values.
-3. Demonstrate in-order traversal.
-4. Test searching.
-5. Demonstrate edge cases.
-6. Create a real-world BST example.
+Searched recursively
 
-## Discussion Board Reflection
+Performed in-order traversal
 
-After completing the programming assignment, add this reflection to your initial discussion post in LEO.
+Examined BST organization and search efficiency
 
-Your reflection should be approximately 150–200 words and address the following questions:
+Implementation Summary
 
-1. What concepts or skills did you learn while completing this assignment?
-2. What challenges did you encounter, and how did you overcome them?
-3. Explain BST behavior and compare to how ordering works to create efficiency as compared to other data structures.
+The program was completed as an employee ID lookup example. Seven employee ID values were inserted into a Binary Search Tree using recursive insertion. Values smaller than a node were placed in the left subtree, while larger values were placed in the right subtree.
+
+The completed program:
+
+Built a BST containing seven employee ID values.
+
+Inserted values recursively into both left and right subtrees.
+
+Performed an in-order traversal and displayed the IDs in ascending order.
+
+Searched for two values that existed and two values that did not exist.
+
+Demonstrated an empty-tree edge case.
+
+Included comments explaining BST insertion, recursive search, traversal, and search-space reduction.
+
+Values Used
+
+The following employee IDs were inserted:
+
+1050, 1025, 1075, 1010, 1040, 1060, 1090
+
+The resulting in-order traversal was:
+
+1010, 1025, 1040, 1050, 1060, 1075, 1090
+
+Search Tests
+
+The program searched for:
+
+1025 — found
+
+1090 — found
+
+1000 — not found
+
+1080 — not found
+
+Edge Case
+
+An empty BST was created and tested. Its in-order traversal returned an empty list, and searching the empty tree returned False. This demonstrated the recursive base case where reaching a None node means the target is not present.
+
+Real-World BST Example
+
+The application modeled employee records organized by employee ID. A BST can support efficient lookup because each comparison determines whether the search should continue in the left or right subtree. This can reduce the amount of data that must be examined compared with a linear search.
+
+BST performance still depends on tree shape. A reasonably balanced tree can support searches in approximately O(log n) time, while sequential or nearly sorted insertion can create a skewed tree with O(n) search behavior.
+
+Discussion Board Reflection
+
+The initial discussion post should include the GitHub repository link and a 150–200 word reflection addressing:
+
+Concepts or skills learned while completing the assignment.
+
+Challenges encountered and how they were overcome.
+
+BST behavior and how ordering improves efficiency compared with other data structures.
